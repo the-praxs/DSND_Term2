@@ -98,8 +98,9 @@ class SalesPerson:
         """
 
         for pants in self.pants_sold:
-            print('color: {}, waist_size: {}, length: {}, price: {}'\
-                  .format(pants.color, pants.waist_size, pants.length, pants.price))
+            print(
+                f'color: {pants.color}, waist_size: {pants.waist_size}, length: {pants.length}, price: {pants.price}'
+            )
     
     def calculate_sales(self):
         """The calculate_sales method sums the total price of all pants sold
@@ -111,12 +112,9 @@ class SalesPerson:
         
         """
 
-        total = 0
-        for pants in self.pants_sold:
-            total += pants.price
-            
+        total = sum(pants.price for pants in self.pants_sold)
         self.total_sales = total
-        
+
         return total
     
     def calculate_commission(self, percentage):

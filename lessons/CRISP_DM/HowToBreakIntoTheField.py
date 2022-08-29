@@ -58,7 +58,10 @@ def higher_ed_test(higher_ed_perc):
     '''
     val_type = type(higher_ed_perc)
     if higher_ed_perc == s.higher_ed_perc:
-        print("Nice job!  That's right.  The percentage of individuals in these three groups is {}.".format(higher_ed_perc))
+        print(
+            f"Nice job!  That's right.  The percentage of individuals in these three groups is {higher_ed_perc}."
+        )
+
     elif val_type != float:
         print("Oops - your final result should be a decimal value associated with the proportion of individuals who are in these three categories (ex. Provide 0.50798 if ~50% of individuals are in these categories)")
     else:

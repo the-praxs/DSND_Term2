@@ -61,7 +61,7 @@ class Binomial(Distribution):
         
         
     def replace_stats_with_data(self):
-    
+
         """Function to calculate p and n from the data set
         
         Args: 
@@ -72,12 +72,12 @@ class Binomial(Distribution):
             float: the n value
     
         """
-    
+
         self.n = len(self.data)
         self.p = 1.0 * sum(self.data) / len(self.data)
         self.mean = self.calculate_mean()
         self.stdev = self.calculate_stdev()
-        
+
         return self.p, self.n
 
     
@@ -129,10 +129,10 @@ class Binomial(Distribution):
             list: y values for the pdf plot
             
         """
-        
+
         x = []
         y = []
-        
+
         # calculate the x values to visualize
         for i in range(self.n + 1):
             x.append(i)
@@ -149,7 +149,7 @@ class Binomial(Distribution):
         return x, y
         
     def __add__(self, other):
-        
+
         """Function to add together two Binomial distributions with equal p
         
         Args:
@@ -159,23 +159,23 @@ class Binomial(Distribution):
             Binomial: Binomial distribution
             
         """
-        
+
         try:
             assert self.p == other.p, 'p values are not equal'
         except AssertionError as error:
             raise
-        
+
         result = Binomial()
         result.n = self.n + other.n
         result.p = self.p
         result.calculate_mean()
         result.calculate_stdev()
-        
+
         return result
         
         
     def __repr__(self):
-    
+
         """Function to output the characteristics of the Binomial instance
         
         Args:
@@ -185,6 +185,5 @@ class Binomial(Distribution):
             string: characteristics of the Gaussian
         
         """
-        
-        return "mean {}, standard deviation {}, p {}, n {}".\
-        format(self.mean, self.stdev, self.p, self.n)
+
+        return f"mean {self.mean}, standard deviation {self.stdev}, p {self.p}, n {self.n}"

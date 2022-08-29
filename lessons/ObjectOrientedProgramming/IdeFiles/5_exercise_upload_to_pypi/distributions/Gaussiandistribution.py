@@ -50,22 +50,15 @@ class Gaussian(Distribution):
 	
 		"""
 
-		if sample:
-			n = len(self.data) - 1
-		else:
-			n = len(self.data)
-	
+		n = len(self.data) - 1 if sample else len(self.data)
 		mean = self.calculate_mean()
-	
-		sigma = 0
-	
-		for d in self.data:
-			sigma += (d - mean) ** 2
-		
+
+		sigma = sum((d - mean) ** 2 for d in self.data)
+
 		sigma = math.sqrt(sigma / n)
-	
+
 		self.stdev = sigma
-		
+
 		return self.stdev
 		
 		
@@ -114,19 +107,19 @@ class Gaussian(Distribution):
 			list: y values for the pdf plot
 			
 		"""
-		
+
 		mu = self.mean
 		sigma = self.stdev
 
 		min_range = min(self.data)
 		max_range = max(self.data)
-		
+
 		 # calculates the interval between x values
 		interval = 1.0 * (max_range - min_range) / n_spaces
 
 		x = []
 		y = []
-		
+
 		# calculate the x values to visualize
 		for i in range(n_spaces):
 			tmp = min_range + interval*i
@@ -167,7 +160,7 @@ class Gaussian(Distribution):
 		
 		
 	def __repr__(self):
-	
+
 		"""Function to output the characteristics of the Gaussian instance
 		
 		Args:
@@ -177,5 +170,5 @@ class Gaussian(Distribution):
 			string: characteristics of the Gaussian
 		
 		"""
-		
-		return "mean {}, standard deviation {}".format(self.mean, self.stdev)
+
+		return f"mean {self.mean}, standard deviation {self.stdev}"

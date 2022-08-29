@@ -17,10 +17,9 @@ def get_description(schema, column_name):
     OUTPUT -
             desc - string - the description of the column
     '''
-    desc = list(schema[schema['Column'] == column_name]['Question'])[0]
-    return desc
+    return list(schema[schema['Column'] == column_name]['Question'])[0]
 
-descrips = set(get_description(schema, col) for col in df.columns)
+descrips = {get_description(schema, col) for col in df.columns}
 
 # Solution to Question 4
 higher_ed = lambda x: 1 if x in ("Master's degree", "Doctoral", "Professional degree") else 0

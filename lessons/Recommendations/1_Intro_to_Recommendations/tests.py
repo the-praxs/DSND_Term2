@@ -78,9 +78,7 @@ def popular_recommendations(user_id, n_top, ranked_movies):
     top_movies - a list of the n_top recommended movies by movie title in order best to worst
     '''
 
-    top_movies = list(ranked_movies['movie'][:n_top])
-
-    return top_movies
+    return list(ranked_movies['movie'][:n_top])
 
 
 
@@ -103,10 +101,7 @@ def popular_recs_filtered(user_id, n_top, ranked_movies, years=None, genres=None
         ranked_movies = ranked_movies.loc[num_genre_match > 0, :]
 
 
-    # create top movies list
-    top_movies = list(ranked_movies['movie'][:n_top])
-
-    return top_movies
+    return list(ranked_movies['movie'][:n_top])
 
 
 def test_recs(sol_dict):
@@ -225,10 +220,9 @@ def test_recs(sol_dict):
     }
     if sol_dict1 == sol_dict:
         return "That's right! All of your solutions look good!"
-    else:
-        for k, v in sol_dict.items():
-            if sol_dict1[k] != sol_dict[k]:
-                print("Oops! Your answer to: {} doesn't look quite right.".format(k))
+    for k, v in sol_dict.items():
+        if sol_dict1[k] != sol_dict[k]:
+            print(f"Oops! Your answer to: {k} doesn't look quite right.")
 
 
 def test_recs2(sol_dict2):
@@ -249,9 +243,8 @@ def test_recs2(sol_dict2):
     }
     if sol_dict1 == sol_dict2:
         return "That's right! All of your solutions look good!"
-    else:
-        for k, v in sol_dict2.items():
-            if sol_dict1[k] != sol_dict[k]:
-                print("Oops! Your answer to: {} doesn't look quite right.".format(k))
+    for k, v in sol_dict2.items():
+        if sol_dict1[k] != sol_dict[k]:
+            print(f"Oops! Your answer to: {k} doesn't look quite right.")
 
           

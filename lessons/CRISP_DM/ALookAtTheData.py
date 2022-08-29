@@ -4,7 +4,7 @@ from collections import defaultdict
 import ALookAtTheDataSolns as s # come back to here
 
 def display_gif(fn):
-    return '<img src="{}">'.format(fn)
+    return f'<img src="{fn}">'
 
 
 ## A Look at the Data
@@ -18,12 +18,12 @@ def check_rows_cols(num_rows, num_cols):
     This function will print a statement related to whether or not you provided the correct number of rows and columns of the dataset.
     '''
     if num_rows == s.num_rows:
-        print("Nice job there are {} rows in the dataset!".format(num_rows))
+        print(f"Nice job there are {num_rows} rows in the dataset!")
     else:
         print("That doesn't look like what we were expecting for the number of rows.")
 
     if num_cols == s.num_cols:
-        print("Nice job there are {} columns in the dataset!".format(num_cols))
+        print(f"Nice job there are {num_cols} columns in the dataset!")
     else:
         print("That doesn't look like what we were expecting for the number of columns.")
 
@@ -40,7 +40,10 @@ def no_null_cols(no_nulls):
         print("Nice job that looks right!")
         return display_gif('https://bit.ly/2K9X0gD')
     else:
-        print("That doesn't look like for the set of no nulls.  There should be {} columns in your list".format(len(s.no_nulls)))
+        print(
+            f"That doesn't look like for the set of no nulls.  There should be {len(s.no_nulls)} columns in your list"
+        )
+
         return display_gif('https://bit.ly/2Hog74V')
         
 
@@ -55,7 +58,9 @@ def most_missing_cols(most_missing_cols):
     if most_missing_cols == s.most_missing_cols:
         print("Nice job that looks right!")
     else:
-        print("That doesn't look like for the set of most nulls.  There should be {} columns in your list".format(len(s.most_missing_cols)))
+        print(
+            f"That doesn't look like for the set of most nulls.  There should be {len(s.most_missing_cols)} columns in your list"
+        )
 
 
 

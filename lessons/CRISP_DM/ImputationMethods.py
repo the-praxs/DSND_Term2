@@ -56,7 +56,7 @@ def impute_q4_check(impute_q4):
                  'Filling column D': a,
                  'Filling column E': b}
 
-    
+
     if impute_q4 == impute_q4_1:
         print("Nice job! That's right only one of these columns actually imputed a mode.  None of the values in the first column appeared more than once, and 0 was imputed for all of the NaN values.  There were an even number of True and False values, and False was imputed for all the NaN values.")
     else:

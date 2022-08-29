@@ -14,23 +14,17 @@ def index():
 	['France','FRA'],['India','IND'],['Italy','ITA'],['Germany','DEU'],
 	['United Kingdom','GBR'],['China','CHN'],['Japan','JPN']]
 
+	countries_selected = []
+
 	# Parse the POST request countries list
 	if (request.method == 'POST') and request.form:
 		figures = return_figures(request.form)
-		countries_selected = []
-
-		for country in request.form.lists():
-			countries_selected.append(country[1][0])
-	
-	# GET request returns all countries for initial page load
+		countries_selected.extend(country[1][0] for country in request.form.lists())
 	else:
 		figures = return_figures()
-		countries_selected = []
-		for country in country_codes:
-			countries_selected.append(country[1])
-
+		countries_selected.extend(country[1] for country in country_codes)
 	# plot ids for the html id tag
-	ids = ['figure-{}'.format(i) for i, _ in enumerate(figures)]
+	ids = [f'figure-{i}' for i, _ in enumerate(figures)]
 
 	# Convert the plotly figures to JSON for javascript in html template
 	figuresJSON = json.dumps(figures, cls=plotly.utils.PlotlyJSONEncoder)

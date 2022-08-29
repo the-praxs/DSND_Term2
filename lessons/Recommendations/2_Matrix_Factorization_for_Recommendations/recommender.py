@@ -123,7 +123,10 @@ class Recommender():
 
             movie_name = str(self.movies[self.movies['movie_id'] == movie_id]['movie']) [5:]
             movie_name = movie_name.replace('\nName: movie, dtype: object', '')
-            print("For user {} we predict a {} rating for the movie {}.".format(user_id, round(pred, 2), str(movie_name)))
+            print(
+                f"For user {user_id} we predict a {round(pred, 2)} rating for the movie {str(movie_name)}."
+            )
+
 
             return pred
 
@@ -166,12 +169,10 @@ class Recommender():
                 rec_names = rf.popular_recommendations(_id, rec_num, self.ranked_movies)
                 print("Because this user wasn't in our database, we are giving back the top movie recommendations for all users.")
 
-        # Find similar movies if it is a movie that is passed
+        elif _id in self.movie_ids_series:
+            rec_names = list(rf.find_similar_movies(_id, self.movies))[:rec_num]
         else:
-            if _id in self.movie_ids_series:
-                rec_names = list(rf.find_similar_movies(_id, self.movies))[:rec_num]
-            else:
-                print("That movie doesn't exist in our database.  Sorry, we don't have any recommendations for you.")
+            print("That movie doesn't exist in our database.  Sorry, we don't have any recommendations for you.")
 
         return rec_ids, rec_names
 

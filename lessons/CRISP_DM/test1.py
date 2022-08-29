@@ -19,12 +19,12 @@ def check_rows_cols(num_rows, num_cols):
     This function will print a statement related to whether or not you provided the correct number of rows and columns of the dataset.
     '''
     if num_rows == s.num_rows:
-        print("Nice job there are {} rows in the dataset!".format(num_rows))
+        print(f"Nice job there are {num_rows} rows in the dataset!")
     else:
         print("That doesn't look like what we were expecting for the number of rows.")
 
     if num_cols == s.num_cols:
-        print("Nice job there are {} columns in the dataset!".format(num_cols))
+        print(f"Nice job there are {num_cols} columns in the dataset!")
     else:
         print("That doesn't look like what we were expecting for the number of columns.")
 
@@ -39,7 +39,9 @@ def no_null_cols(no_nulls):
     if no_nulls == s.no_nulls:
         print("Nice job that looks right!")
     else:
-        print("That doesn't look like for the set of no nulls.  There should be {} columns in your list".format(len(s.no_nulls)))
+        print(
+            f"That doesn't look like for the set of no nulls.  There should be {len(s.no_nulls)} columns in your list"
+        )
 
 # Question 3
 def most_missing_cols(most_missing_cols):
@@ -52,7 +54,9 @@ def most_missing_cols(most_missing_cols):
     if most_missing_cols == s.most_missing_cols:
         print("Nice job that looks right!")
     else:
-        print("That doesn't look like for the set of most nulls.  There should be {} columns in your list".format(len(s.most_missing_cols)))
+        print(
+            f"That doesn't look like for the set of most nulls.  There should be {len(s.most_missing_cols)} columns in your list"
+        )
 
 
 ## How To Break Into the Field
@@ -113,15 +117,18 @@ def mean_amt(df, col_name, col_mean, look_for):
     '''
     new_df = defaultdict(int)
     squares_df = defaultdict(int)
-    denoms = dict()
+    denoms = {}
     for val in look_for:
         denoms[val] = 0
         for idx in range(df.shape[0]):
-            if df[col_name].isnull()[idx] == False:
-                if val in df[col_name][idx] and df[col_mean][idx] > 0:
-                    new_df[val] += df[col_mean][idx]
-                    squares_df[val] += df[col_mean][idx]**2 #Needed to understand the spread
-                    denoms[val] += 1
+            if (
+                df[col_name].isnull()[idx] == False
+                and val in df[col_name][idx]
+                and df[col_mean][idx] > 0
+            ):
+                new_df[val] += df[col_mean][idx]
+                squares_df[val] += df[col_mean][idx]**2 #Needed to understand the spread
+                denoms[val] += 1
 
     # Turn into dataframes
     new_df = pd.DataFrame(pd.Series(new_df)).reset_index()
@@ -156,7 +163,10 @@ def higher_ed_test(higher_ed_perc):
     '''
     val_type = type(higher_ed_perc)
     if higher_ed_perc == s.higher_ed_perc:
-        print("Nice job!  That's right.  The percentage of individuals in these three groups is {}.".format(higher_ed_perc))
+        print(
+            f"Nice job!  That's right.  The percentage of individuals in these three groups is {higher_ed_perc}."
+        )
+
     elif val_type != float:
         print("Oops - your final result should be a decimal value associated with the proportion of individuals who are in these three categories (ex. Provide 0.50798 if ~50% of individuals are in these categories)")
     else:
@@ -464,7 +474,7 @@ def impute_q4_check(impute_q4):
     impute_q4_1 = {'Filling column A': b,
                  'Filling column D': a,
                  'Filling column E': a}
-    
+
     if impute_q4 == impute_q4_1:
         print("Nice job! That's right only one of these columns actually imputed a mode.  None of the values in the first column appeared more than once, and 0 was imputed for all of the NaN values.  There were an even number of True and False values, and False was imputed for all the NaN values.")
     else:
@@ -591,10 +601,13 @@ def create_dummy_df_check(df_new):
 
     Prints statement related to the correctness of the dataframe provided.
     '''
-    if set(df_new.columns).difference(s.df_new.columns) == set():
+    if not set(df_new.columns).difference(s.df_new.columns):
         print("Nice job! This passes the simple tests I built!  It is a good idea to do a spot check yourself as well.")
     else:
-        print("Looks like there is a difference due to these columns not matching: {}".format(set(df_new.columns).difference(s.df_new.columns)))
+        print(
+            f"Looks like there is a difference due to these columns not matching: {set(df_new.columns).difference(s.df_new.columns)}"
+        )
+
         print("That wasn't quite as expected.  Make sure your dataframe has these 4 characteristics:   1. contains all columns that were not specified as categorical 2. removes all the original columns in cat_cols 3. dummy columns for each of the categorical columns in cat_cols 4. if dummy_na is True - it also contains dummy columns for the NaN values 5. Use a prefix of the column name with an underscore (_) for separating ")
 
 #Question 6
@@ -688,11 +701,11 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
     lm_model - model object from sklearn
     X_train, X_test, y_train, y_test - output from sklearn train test split used for optimal model
     '''
-    r2_scores_test, r2_scores_train, num_feats, results = [], [], [], dict()
+    r2_scores_test, r2_scores_train, num_feats, results = [], [], [], {}
     for cutoff in cutoffs:
 
         #reduce X matrix
-        reduce_X = X.iloc[:, np.where((X.sum() > cutoff) == True)[0]]
+        reduce_X = X.iloc[:, np.where(X.sum() > cutoff)[0]]
         num_feats.append(reduce_X.shape[1])
 
         #split the data into train and test
@@ -721,7 +734,7 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
     best_cutoff = max(results, key=results.get)
 
     #reduce X matrix
-    reduce_X = X.iloc[:, np.where((X.sum() > int(best_cutoff)) == True)[0]]
+    reduce_X = X.iloc[:, np.where(X.sum() > int(best_cutoff))[0]]
     num_feats.append(reduce_X.shape[1])
 
     #split the data into train and test

@@ -26,7 +26,9 @@ def sol_1_test(sol_1_dict):
     else:
         for k, v in sol_1_dict.items():
             if sol_1_dict_[k] != sol_1_dict[k]:
-                print("Oops! It looks like the value associated with: {} wasn't right. Try again.  It might just be the datatype.  All of the values should be ints except the article_id should be a string.  Let each row be considered a separate user-article interaction.  If a user interacts with an article 3 times, these are considered 3 separate interactions.".format(k))
+                print(
+                    f"Oops! It looks like the value associated with: {k} wasn't right. Try again.  It might just be the datatype.  All of the values should be ints except the article_id should be a string.  Let each row be considered a separate user-article interaction.  If a user interacts with an article 3 times, these are considered 3 separate interactions."
+                )
 
 
 def sol_2_test(top_articles):
@@ -35,11 +37,11 @@ def sol_2_test(top_articles):
     top_20 = top_articles(20)
 
     checks = ['top_5', 'top_10', 'top_20']
-    for idx, file in enumerate(checks):
-        if set(eval(file)) == set(pickle.load(open( "{}.p".format(file), "rb" ))):
-            print("Your {} looks like the solution list! Nice job.".format(file))
+    for file in checks:
+        if set(eval(file)) == set(pickle.load(open(f"{file}.p", "rb"))):
+            print(f"Your {file} looks like the solution list! Nice job.")
         else:
-            print("Oops! The {} list doesn't look how we expected.  Try again.".format(file))
+            print(f"Oops! The {file} list doesn't look how we expected.  Try again.")
 
 
 
@@ -54,7 +56,9 @@ def sol_5_test(sol_5_dict):
     else:
         for k, v in sol_5_dict_1.items():
             if set(sol_5_dict[k]) != set(sol_5_dict_1[k]):
-                print("Oops!  Looks like there is a mistake with the {} key in your dictionary.  The answer should be {}.  Try again.".format(k,v))
+                print(
+                    f"Oops!  Looks like there is a mistake with the {k} key in your dictionary.  The answer should be {v}.  Try again."
+                )
 
 
 def sol_4_test(sol_4_dict):
@@ -76,4 +80,6 @@ def sol_4_test(sol_4_dict):
     else:
         for k, v in sol_4_dict_1.items():
             if sol_4_dict_1[k] != sol_4_dict[k]:
-                print("Sorry it looks like that isn't the right value associated with {}.  Try again.".format(k))
+                print(
+                    f"Sorry it looks like that isn't the right value associated with {k}.  Try again."
+                )

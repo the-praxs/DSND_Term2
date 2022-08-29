@@ -84,11 +84,11 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
     lm_model - model object from sklearn
     X_train, X_test, y_train, y_test - output from sklearn train test split used for optimal model
     '''
-    r2_scores_test, r2_scores_train, num_feats, results = [], [], [], dict()
+    r2_scores_test, r2_scores_train, num_feats, results = [], [], [], {}
     for cutoff in cutoffs:
 
         #reduce X matrix
-        reduce_X = X.iloc[:, np.where((X.sum() > cutoff) == True)[0]]
+        reduce_X = X.iloc[:, np.where(X.sum() > cutoff)[0]]
         num_feats.append(reduce_X.shape[1])
 
         #split the data into train and test
@@ -117,7 +117,7 @@ def find_optimal_lm_mod(X, y, cutoffs, test_size = .30, random_state=42, plot=Tr
     best_cutoff = max(results, key=results.get)
 
     #reduce X matrix
-    reduce_X = X.iloc[:, np.where((X.sum() > int(best_cutoff)) == True)[0]]
+    reduce_X = X.iloc[:, np.where(X.sum() > int(best_cutoff))[0]]
     num_feats.append(reduce_X.shape[1])
 
     #split the data into train and test

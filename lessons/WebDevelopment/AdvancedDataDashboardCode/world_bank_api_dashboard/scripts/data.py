@@ -46,8 +46,9 @@ def return_figures(countries=country_default):
   # pull data from World Bank API and clean the resulting json
   # results stored in data_frames variable
   for indicator in indicators:
-    url = 'http://api.worldbank.org/v2/countries/' + country_filter +\
-    '/indicators/' + indicator + '?date=1990:2015&per_page=1000&format=json'
+    url = ((f'http://api.worldbank.org/v2/countries/{country_filter}' +
+            '/indicators/') +
+           indicator) + '?date=1990:2015&per_page=1000&format=json'
     urls.append(url)
 
     try:
@@ -56,12 +57,12 @@ def return_figures(countries=country_default):
     except:
       print('could not load data ', indicator)
 
-    for i, value in enumerate(data):
+    for value in data:
       value['indicator'] = value['indicator']['value']
       value['country'] = value['country']['value']
 
     data_frames.append(data)
-  
+
   # first chart plots arable land from 1990 to 2015 in top 10 economies 
   # as a line chart
   graph_one = []
@@ -75,7 +76,7 @@ def return_figures(countries=country_default):
   # this  country list is re-used by all the charts to ensure legends have the same
   # order and color
   countrylist = df_one.country.unique().tolist()
-  
+
   for country in countrylist:
       x_val = df_one[df_one['country'] == country].date.tolist()
       y_val =  df_one[df_one['country'] == country].value.tolist()
@@ -94,18 +95,10 @@ def return_figures(countries=country_default):
                 yaxis = dict(title = 'Hectares'),
                 )
 
-  # second chart plots ararble land for 2015 as a bar chart
-  graph_two = []
   df_one.sort_values('value', ascending=False, inplace=True)
   df_one = df_one[df_one['date'] == '2015'] 
 
-  graph_two.append(
-      go.Bar(
-      x = df_one.country.tolist(),
-      y = df_one.value.tolist(),
-      )
-  )
-
+  graph_two = [go.Bar(x = df_one.country.tolist(), y = df_one.value.tolist())]
   layout_two = dict(title = 'Hectares Arable Land per Person in 2015',
                 xaxis = dict(title = 'Country',),
                 yaxis = dict(title = 'Hectares per person'),
@@ -139,7 +132,7 @@ def return_figures(countries=country_default):
   graph_four = []
   df_four_a = pd.DataFrame(data_frames[2])
   df_four_a = df_four_a[['country', 'date', 'value']]
-  
+
   df_four_b = pd.DataFrame(data_frames[3])
   df_four_b = df_four_b[['country', 'date', 'value']]
 
@@ -148,29 +141,28 @@ def return_figures(countries=country_default):
 
   plotly_default_colors = plotly.colors.DEFAULT_PLOTLY_COLORS
 
-  for i, country in enumerate(countrylist):
+  current_color = []
 
-      current_color = []
+  for country in countrylist:
+    x_val = df_four[df_four['country'] == country].value_x.tolist()
+    y_val = df_four[df_four['country'] == country].value_y.tolist()
+    years = df_four[df_four['country'] == country].date.tolist()
+    country_label = df_four[df_four['country'] == country].country.tolist()
 
-      x_val = df_four[df_four['country'] == country].value_x.tolist()
-      y_val = df_four[df_four['country'] == country].value_y.tolist()
-      years = df_four[df_four['country'] == country].date.tolist()
-      country_label = df_four[df_four['country'] == country].country.tolist()
+    text = []
+    for country, year in zip(country_label, years):
+      text.append(f'{str(country)} {str(year)}')
 
-      text = []
-      for country, year in zip(country_label, years):
-          text.append(str(country) + ' ' + str(year))
-
-      graph_four.append(
-          go.Scatter(
-          x = x_val,
-          y = y_val,
-          mode = 'lines+markers',
-          text = text,
-          name = country,
-          textposition = 'top'
-          )
-      )
+    graph_four.append(
+        go.Scatter(
+        x = x_val,
+        y = y_val,
+        mode = 'lines+markers',
+        text = text,
+        name = country,
+        textposition = 'top'
+        )
+    )
 
   layout_four = dict(title = '% of Population that is Rural versus <br> % of Land that is Forested <br> 1990-2015',
                 xaxis = dict(title = '% Population that is Rural', range=[0,100], dtick=10),
@@ -178,11 +170,9 @@ def return_figures(countries=country_default):
                 )
 
 
-  # append all charts
-  figures = []
-  figures.append(dict(data=graph_one, layout=layout_one))
-  figures.append(dict(data=graph_two, layout=layout_two))
-  figures.append(dict(data=graph_three, layout=layout_three))
-  figures.append(dict(data=graph_four, layout=layout_four))
-
-  return figures
+  return [
+      dict(data=graph_one, layout=layout_one),
+      dict(data=graph_two, layout=layout_two),
+      dict(data=graph_three, layout=layout_three),
+      dict(data=graph_four, layout=layout_four),
+  ]

@@ -50,27 +50,20 @@ class Gaussian():
     
         """
 
-        if sample:
-            n = len(self.data) - 1
-        else:
-            n = len(self.data)
-    
+        n = len(self.data) - 1 if sample else len(self.data)
         mean = self.mean
-    
-        sigma = 0
-    
-        for d in self.data:
-            sigma += (d - mean) ** 2
-        
+
+        sigma = sum((d - mean) ** 2 for d in self.data)
+
         sigma = math.sqrt(sigma / n)
-    
+
         self.stdev = sigma
-        
+
         return self.stdev
         
 
     def read_data_file(self, file_name, sample=True):
-    
+
         """Function to read in data from a txt file. The txt file should have
         one number (float) per line. The numbers are stored in the data attribute. 
         After reading in the file, the mean and standard deviation are calculated
@@ -82,15 +75,13 @@ class Gaussian():
             None
         
         """
-            
+        
         with open(file_name) as file:
             data_list = []
-            line = file.readline()
-            while line:
+            while line := file.readline():
                 data_list.append(int(line))
-                line = file.readline()
         file.close()
-    
+
         self.data = data_list
         self.mean = self.calculate_mean()
         self.stdev = self.calculate_stdev(sample)
@@ -140,19 +131,19 @@ class Gaussian():
             list: y values for the pdf plot
             
         """
-        
+
         mu = self.mean
         sigma = self.stdev
 
         min_range = min(self.data)
         max_range = max(self.data)
-        
+
          # calculates the interval between x values
         interval = 1.0 * (max_range - min_range) / n_spaces
 
         x = []
         y = []
-        
+
         # calculate the x values to visualize
         for i in range(n_spaces):
             tmp = min_range + interval*i
@@ -193,7 +184,7 @@ class Gaussian():
         
         
     def __repr__(self):
-    
+
         """Function to output the characteristics of the Gaussian instance
         
         Args:
@@ -203,5 +194,5 @@ class Gaussian():
             string: characteristics of the Gaussian
         
         """
-        
-        return "mean {}, standard deviation {}".format(self.mean, self.stdev)
+
+        return f"mean {self.mean}, standard deviation {self.stdev}"

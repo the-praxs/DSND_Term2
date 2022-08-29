@@ -189,7 +189,7 @@ class Binomial(Distribution):
         #   The x and y values should be stored in separate lists
                 
     def __add__(self, other):
-        
+
         """Function to add together two Binomial distributions with equal p
         
         Args:
@@ -199,27 +199,11 @@ class Binomial(Distribution):
             Binomial: Binomial distribution
             
         """
-        
+
         try:
             assert self.p == other.p, 'p values are not equal'
         except AssertionError as error:
             raise
-        
-        # TODO: Define addition for two binomial distributions. Assume that the
-        # p values of the two distributions are the same. The formula for 
-        # summing two binomial distributions with different p values is more complicated,
-        # so you are only expected to implement the case for two distributions with equal p.
-        
-        # the try, except statement above will raise an exception if the p values are not equal
-        
-        # Hint: You need to instantiate a new binomial object with the correct n, p, 
-        #   mean and standard deviation values. The __add__ method should return this
-        #   new binomial object.
-        
-        #   When adding two binomial distributions, the p value remains the same
-        #   The new n value is the sum of the n values of the two distributions.
-                
-        pass
         
         
     def __repr__(self):

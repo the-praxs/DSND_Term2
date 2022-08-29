@@ -10,10 +10,7 @@ def get_movie_names(movie_ids, movies_df):
     movies - a list of movie names associated with the movie_ids
 
     '''
-    # Read in the datasets
-    movie_lst = list(movies_df[movies_df['movie_id'].isin(movie_ids)]['movie'])
-
-    return movie_lst
+    return list(movies_df[movies_df['movie_id'].isin(movie_ids)]['movie'])
 
 
 def create_ranked_df(movies, reviews):
@@ -67,10 +64,7 @@ def find_similar_movies(movie_id, movies_df):
     # find the most similar movie indices - to start I said they need to be the same for all content
     similar_idxs = np.where(dot_prod_movies[movie_idx] == np.max(dot_prod_movies[movie_idx]))[0]
 
-    # pull the movie titles based on the indices
-    similar_movies = np.array(movies_df.iloc[similar_idxs, ]['movie'])
-
-    return similar_movies
+    return np.array(movies_df.iloc[similar_idxs, ]['movie'])
 
 
 def popular_recommendations(user_id, n_top, ranked_movies):
@@ -84,6 +78,4 @@ def popular_recommendations(user_id, n_top, ranked_movies):
     top_movies - a list of the n_top recommended movies by movie title in order best to worst
     '''
 
-    top_movies = list(ranked_movies['movie'][:n_top])
-
-    return top_movies
+    return list(ranked_movies['movie'][:n_top])
